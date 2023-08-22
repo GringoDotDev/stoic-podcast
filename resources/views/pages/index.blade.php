@@ -10,7 +10,7 @@ name('home');
     $episodes = Episode::query()->orderBy('created_at', 'desc')->get();
 @endphp
 
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -28,7 +28,7 @@ name('home');
 </head>
 <body class="font-sans text-gray-900 antialiased">
 <div class="flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 w-full min-h-screen">
-    <img alt="Stoic philosopher making a podcast" src="/hero.png" class="max-w-xl pt-6"/>
+    <img alt="Stoic philosopher making a podcast" src="/hero-md.png" class="max-w-xl pt-6"/>
     <h1 class="font-semibold text-2xl my-4">The Stoic Developer</h1>
     <h2 class="text-lg max-w-lg text-center">Classic passages of Stoic philosophy brought to life. Open source and built
         with
