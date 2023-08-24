@@ -42,6 +42,9 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // TODO: remove later
+        $user->markEmailAsVerified();
+
         event(new Registered($user));
 
         Auth::login($user);

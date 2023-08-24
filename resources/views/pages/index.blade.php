@@ -10,7 +10,7 @@ name('home');
     $episodes = Episode::query()->orderBy('created_at', 'desc')->get();
 @endphp
 
-        <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -33,21 +33,33 @@ name('home');
     <h2 class="text-lg max-w-lg text-center">Classic passages of Stoic philosophy brought to life. Open source and built
         with
         Laravel.</h2>
-    <div class="flex flex-wrap justify-center my-6 gap-4">
+    <div class="flex flex-wrap justify-center my-8 gap-4">
         <a href="https://youtube.com/@GringoDotDev" target="_blank">
             <x-logos.youtube-logo class="w-8 h-8"/>
         </a>
         <a href="https://twitter.com/GringoDotDev" target="_blank">
             <x-logos.x-logo class="w-8 h-8"/>
         </a>
-        <a href="https://github.com/GringoDotDev">
+        <a href="https://github.com/GringoDotDev/stoic-podcast" target="_blank">
             <x-logos.github-logo class="w-8 h-8"/>
         </a>
     </div>
     <div>
+        @if(!auth()->check())
+            <a href="{{ route('register') }}" wire:navigate>
+                <x-primary-button>Sign Up or In</x-primary-button>
+            </a>
+        @else
+            <a href="{{ route('dashboard') }}" wire:navigate>
+                <x-primary-button>Dashboard</x-primary-button>
+            </a>
+        @endif
+    </div>
+    <div class="flex-grow border-t border-gray-300 mt-6"/>
+    <div class="mt-6">
         <h1 class="font-semibold text-3xl mb-6">Episodes</h1>
         @forelse($episodes as $episode)
-            <livewire:episode-tile :episode="$episode"/>
+            <livewire:episode-tile :episode="$episode" :key="$episode->id"/>
         @empty
             <p>No episodes yet.</p>
         @endforelse
