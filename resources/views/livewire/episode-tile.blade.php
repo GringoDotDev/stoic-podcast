@@ -2,6 +2,7 @@
 
 use function Livewire\Volt\{on, state, computed};
 use App\Models\FavoriteEpisode;
+use Filament\Notifications\Notification;
 
 state('episode')->reactive();
 $query = computed(fn() => FavoriteEpisode::where([
@@ -15,7 +16,7 @@ $downloadFile = fn() => Storage::disk('public')->download($this->episode->file_p
 
 $addFavorite = function () {
     if (!auth()->check()) {
-        return redirect()->route('login');
+        return redirect()->route('register');
     }
 
     if (!auth()->user()?->can('create', FavoriteEpisode::class)) {
@@ -27,16 +28,25 @@ $addFavorite = function () {
         'episode_id' => $this->episode->id,
     ]);
 
+    Notification::make()->title('Favorite added.')->success()->send();
     $this->dispatch('favorite-added', id: $favorite->id);
 };
 
 $removeFavorite = function () {
-    if (!auth()->user()?->can('delete', $this->favoriteEpisode)) {
-        abort(403);
+    if (!auth()->check()) {
+        return redirect()->route('register');
     }
 
-    $favorite = $this->query->delete();
-    unset($this->favoriteEpisode);
+    if ($this->favoriteEpisode && !auth()->user()?->can('delete', $this->favoriteEpisode)) {
+        Notification::make()->title('Permission denied.')->danger()->send();
+    } elseif (!$this->favoriteEpisode) {
+        Notification::make()->title('Favorite not found.')->danger()->send();
+    } else {
+        $favorite = $this->query->delete();
+        unset($this->favoriteEpisode);
+        Notification::make()->title('Favorite removed.')->success()->send();
+    }
+
     $this->dispatch('favorite-removed');
 };
 
@@ -61,7 +71,7 @@ $removeFavorite = function () {
                 @class(["w-6", "h-6", "stroke-red-500", "fill-red-500", "cursor-pointer", "hidden" => !$this->isFavorited]) />
         </div>
     </div>
-    <audio controls src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
+    <audio controls preload="metadata" src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
     <p class="truncate" :class="{ 'truncate': !expanded }">
         <span>{{$episode->transcript}}</span>
     </p>
