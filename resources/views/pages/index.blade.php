@@ -9,10 +9,11 @@ $episodes = computed(fn() => App\Models\Episode::query()->orderBy('created_at', 
 ?>
 
 <x-guest-layout>
-    <div class="flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 w-full min-h-screen">
-        <img alt="Stoic philosopher making a podcast" src="/hero-md.png" class="max-w-xl pt-6"/>
+    <div class="flex flex-col items-center bg-gray-100 w-full min-h-screen xl:pt-6">
+        <img alt="Stoic philosopher making a podcast" src="/hero-md.png" class="w-full max-w-xl"/>
         <h1 class="font-semibold text-2xl my-4">The Stoic Developer</h1>
-        <h2 class="text-lg max-w-lg text-center">Classic passages of Stoic philosophy brought to life. Open source and
+        <h2 class="text-lg max-w-lg text-center px-4">Classic passages of Stoic philosophy brought to life. Open source
+            and
             built
             with
             Laravel.</h2>
@@ -38,10 +39,10 @@ $episodes = computed(fn() => App\Models\Episode::query()->orderBy('created_at', 
                 </a>
             @endif
         </div>
-        <div class="flex-grow border-t border-gray-300 mt-6"/>
         @volt('home')
-        <div class="mt-6">
-            <h1 class="font-semibold text-3xl mb-6">Episodes</h1>
+        <div class="px-4">
+            <div class="w-full border-t border-gray-300 mt-6"></div>
+            <h1 class="font-semibold text-3xl my-6">Episodes</h1>
             @forelse($this->episodes as $episode)
                 <livewire:episode-tile :episode="$episode" :key="$episode->id"/>
             @empty

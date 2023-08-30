@@ -71,13 +71,12 @@ $removeFavorite = function () {
                 @class(["w-6", "h-6", "stroke-red-500", "fill-red-500", "cursor-pointer", "hidden" => !$this->isFavorited]) />
         </div>
     </div>
-    <audio controls preload="metadata" src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
-    <p class="truncate" :class="{ 'truncate': !expanded }">
-        <span>{{$episode->transcript}}</span>
     @persist('episode-'.$episode->id)
     <audio controls preload="metadata"
            src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
     @endpersist
+    <p class="line-clamp-3" :class="{ 'line-clamp-3': !expanded }">
+        {{$episode->transcript}}
     </p>
     <div>
         <x-primary-button @click="expanded = !expanded">
