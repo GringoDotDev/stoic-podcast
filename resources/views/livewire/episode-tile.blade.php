@@ -74,6 +74,10 @@ $removeFavorite = function () {
     <audio controls preload="metadata" src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
     <p class="truncate" :class="{ 'truncate': !expanded }">
         <span>{{$episode->transcript}}</span>
+    @persist('episode-'.$episode->id)
+    <audio controls preload="metadata"
+           src="{{ Storage::disk('public')->url($episode->file_path) }}"></audio>
+    @endpersist
     </p>
     <div>
         <x-primary-button @click="expanded = !expanded">

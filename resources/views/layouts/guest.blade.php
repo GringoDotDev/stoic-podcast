@@ -22,16 +22,13 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @filamentScripts
-    @livewire('notifications')
-
-    <script type="text/javascript" data-navigate-once>
-        document.addEventListener('livewire:navigating', () => {
-            // remove dangling notifications
-            document.querySelectorAll('.fi-no').forEach((e) => e.remove())
-        })
-    </script>
 </head>
 <body class="font-sans text-gray-900 antialiased">
+
 {{$slot}}
+
+@persist('notifications')
+@livewire('notifications')
+@endpersist
 </body>
 </html>
