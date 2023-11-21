@@ -11,12 +11,6 @@ if [[ "${!ENV_VAR_NAME}" = "true" ]]; then
   php artisan down
 fi
 
-# Install Composer dependencies without dev dependencies
-composer install --optimize-autoloader --no-dev
-
-# Install NPM packages
-npm i
-
 # Build assets using NPM
 npm run build
 
@@ -30,7 +24,7 @@ php artisan route:cache
 php artisan view:cache
 
 # Run any database migrations
-php artisan migrate --force
+# php artisan migrate --force
 
 # Check if the environment variable is set to "false" or not set at all
 if [[ "${!ENV_VAR_NAME}" = "false" ]] || [[ -z "${!ENV_VAR_NAME}" ]]; then
