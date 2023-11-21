@@ -24,7 +24,7 @@ php artisan route:cache
 php artisan view:cache
 
 # Run any database migrations
-# php artisan migrate --force
+DATABASE_URL=$PUBLIC_DATABASE_URL php artisan migrate --force
 
 # Check if the environment variable is set to "false" or not set at all
 if [[ "${!ENV_VAR_NAME}" = "false" ]] || [[ -z "${!ENV_VAR_NAME}" ]]; then
